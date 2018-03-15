@@ -2,10 +2,18 @@ const collectionName = 'cloudUsers';
 
 exports.createUser = (db, userName) => {
 	const userCollection = db.collection(collectionName);
-	userCollection.insertOne({ userName: userName });
+	userCollection.findOne({ userName: userName }, (err, result) => {
+		if (result === null) {
+			userCollection.insertOne({ userName: userName });
+			console.log('> user added');
+		} else {
+			console.log('> user already exist');
+		}
+	});
 };
 
 exports.removeUser = (db, userName) => {
 	const userCollection = db.collection(collectionName);
-	userCollection.deleteOne({userName: userName });
+	userCollection.deleteMany({userName: userName });
+	console.log('> userDeleted');
 };

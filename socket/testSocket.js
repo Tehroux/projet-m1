@@ -2,7 +2,7 @@ const net = require('net');
 
 const client = net.createConnection({ port: 8123 }, () => {
 	console.log('> connected to server');
-	client.write('world\r\n');
+	client.write('USER_ADD\r\n');
 });
 
 client.on('error', (err) => {

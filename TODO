@@ -1,5 +1,2 @@
 TODO
--- add gitignore to not push teh folder node_modules
--- createUser: add users info
--- removeUser
--- change userName to UUID in user.js
+-- use mongoos for db usage

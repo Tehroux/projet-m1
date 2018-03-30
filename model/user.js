@@ -1,10 +1,12 @@
-const  mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
+const  userSchema = mongoose.Schema({
 	username: String,
 	password: String
 });
 
-const User = mongoose.model('user', userSchema);
+const user = exports.userModel = mongoose.model('user', userSchema);
 
-exports.User = User;
+exports.createUser = (newUser, callback) => {
+	newUser.save(callback);
+};

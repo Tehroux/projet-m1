@@ -1,14 +1,6 @@
 const net = require('net');
 const mongoose = require('mongoose');
 
-const parser = require('./parser/parser.js');
-
-const User = require('./model/user.js').User; 
-
-const URL = 'mongodb://localhost:27017/cloud';
-
-mongoose.connect(URL);
-
 // server creation
 const server = net.createServer((client) => {
 	console.log('> client connected');
@@ -31,6 +23,28 @@ server.listen(8123, () => {
 });
 
 
+// mongo
+mongoose.connect('mongodb://localhost:27017/cloud');
+
+const  db = mongoose.connection;
+
+db.on('error', console.error.bind(console, '> connection error: '));
+
+db.on('connected', () => {
+	console.log('> mongodb connected');
+});
+
+db.on('disconnected', () => {
+	console.log('> mongodb disconnected');
+});
+
+const user = require('./model/user.js')
+
+user.userModel.findOne({username: 'test1'}, (err, data) => {
+	console.log(data);
+});
+
+// parsing logic
 const SEP = /:/;
 
 const SIGN_IN = /SIGN_IN/; // SIGN_IN:username:password
@@ -51,14 +65,12 @@ const parse = (string) => {
 };
 
 const sign_in = (username, password) => {
+	user.userModel.find({ username: 'username' }, (err, data)  => {
+		console.log(data);
+	});
 };
 
-const log_in = (username, password) => {
-	User.findOne({ username: 'test' },
-		function(err, data) {
-			console.log('%s', data.username);
-		}
-	);
+const log_in = (usernam, password) => {
 };
 
-log_in('test', 'test');
+sign_in('test1', 'test1');
